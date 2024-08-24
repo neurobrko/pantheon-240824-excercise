@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "pantheonexcercise"
+version = "0.1.0"
+description = ""
+authors = ["neurobrko <elvis@elvis.sk>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+swagger-ui = "^0.1.2"
+sqlalchemy = "^2.0.32"
+connexion = "^3.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
