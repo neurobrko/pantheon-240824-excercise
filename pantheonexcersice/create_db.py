@@ -1,35 +1,12 @@
-from sqlalchemy import (
-    create_engine,
-    insert,
-    MetaData,
-    Table,
-    Column,
-    Integer,
-    String,
-    Date,
-)
-from datetime import datetime
-
-
-def convert_date(dateString, dateFormat="%Y-%m-%d"):
-    dt = datetime.strptime(dateString, dateFormat)
-    return dt
-
+from sqlalchemy import create_engine, insert, MetaData
+from functions import convert_date
+from models import table_model
 
 # create db
 engine = create_engine("sqlite:///library.db", echo=True)
 meta = MetaData()
-
 # create table
-books = Table(
-    "books",
-    meta,
-    Column("id", Integer, primary_key=True),
-    Column("title", String),
-    Column("author", String),
-    Column("isbn", String),
-    Column("published_date", Date),
-)
+books = table_model("books", meta)
 meta.create_all(engine)
 
 # insert test data
