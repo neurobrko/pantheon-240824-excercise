@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, insert, MetaData, select
+from sqlalchemy import create_engine, insert, MetaData, select, delete, update
 from functions import fix_published_date
 from models import table_model
 
@@ -39,3 +39,22 @@ def get_book_detail(book_id, eng=engine, tbl=table):
         result = conn.execute(stmt).fetchone()
         conn.commit()
     return result
+
+
+def delete_book(book_id, eng=engine, tbl=table):
+    book_id = str(book_id)
+    with engine.connect() as conn:
+        stmt = delete(tbl).where(tbl.c.id == book_id)
+        conn.execute(stmt)
+        conn.commit()
+
+
+def update_book(book, eng=engine, tbl=table):
+    book_id = str(book["id"])
+    del book["id"]
+
+    with engine.connect() as conn:
+        update_values = fix_published_date(book)
+        stmt = update(tbl).where(tbl.c.id == book_id).values(update_values)
+        conn.execute(stmt)
+        conn.commit()
